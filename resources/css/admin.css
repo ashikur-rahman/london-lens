@@ -1,0 +1,51 @@
+body{
+    background:#f4f6f9;
+}
+
+.sidebar{
+
+    width:260px;
+
+    min-height:100vh;
+
+    background:#212529;
+
+    color:white;
+
+}
+
+.sidebar a{
+
+    color:#adb5bd;
+
+    text-decoration:none;
+
+    display:block;
+
+    padding:12px 20px;
+
+}
+
+.sidebar a:hover{
+
+    background:#343a40;
+
+    color:white;
+
+}
+
+.content{
+
+    margin-left:260px;
+
+    padding:30px;
+
+}
+
+.card{
+
+    border:none;
+
+    border-radius:12px;
+
+}
