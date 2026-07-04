@@ -13,8 +13,17 @@ class AdminMiddleware
      *
      * @param  Closure(Request): (Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+        public function handle(Request $request, Closure $next): Response
     {
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
+
+        if (!auth()->user()->hasRole('Super Admin')
+            && !auth()->user()->hasRole('Admin')) {
+            abort(403);
+        }
+
         return $next($request);
     }
 }
