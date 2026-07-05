@@ -6,6 +6,8 @@ use App\Repositories\Admin\UserRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
+use App\Models\User;
+
 class UserService
 {
     public function __construct(
@@ -41,4 +43,31 @@ class UserService
 
         });
     }
+
+    public function update(User $user, array $data)
+        {
+            return DB::transaction(function () use ($user, $data) {
+
+                if (!empty($data['password'])) {
+
+                    $data['password'] = Hash::make($data['password']);
+
+                } else {
+
+                    unset($data['password']);
+
+                }
+
+                $role = $data['role'];
+
+                unset($data['role']);
+
+                $user = $this->repository->update($user, $data);
+
+                $user->syncRoles([$role]);
+
+                return $user;
+
+            });
+        }
 }

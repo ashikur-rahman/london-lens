@@ -59,10 +59,9 @@
             @foreach($roles as $role)
 
                 <option
-                    value="{{ $role }}">
-
+                    value="{{ $role }}"
+                    @selected(old('role', optional($user ?? null)?->getRoleNames()->first()) == $role)>
                     {{ $role }}
-
                 </option>
 
             @endforeach
@@ -77,7 +76,12 @@
 
     <div class="col-md-6 mb-3">
 
-        <label>Password</label>
+        <label>
+        Password
+        @if(isset($user))
+            <small class="text-muted">(Leave blank to keep current password)</small>
+        @endif
+        </label>
 
         <input
             type="password"
@@ -102,11 +106,11 @@
 <div class="form-check form-switch mb-4">
 
 <input
-type="checkbox"
-name="status"
-value="1"
-checked
-class="form-check-input">
+    class="form-check-input"
+    type="checkbox"
+    name="status"
+    value="1"
+    @checked(old('status', $user->status ?? true))>
 
 <label>
 
@@ -115,6 +119,8 @@ Active User
 </label>
 
 </div>
+
+
 
 <div class="d-flex justify-content-end">
 

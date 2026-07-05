@@ -3,7 +3,22 @@
 @section('content')
 <div class="container-fluid">
 
-    <h3 class="mb-4">Users</h3>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h3 class="mb-0">
+        Users
+    </h3>
+
+    <a href="{{ route('admin.users.create') }}"
+       class="btn btn-primary">
+
+        <i class="bi bi-plus-circle me-1"></i>
+
+        Create User
+
+    </a>
+
+</div>
 
     <form method="GET" class="row g-3 mb-4">
 
@@ -51,6 +66,7 @@
                     <th>Email</th>
                     <th>Role</th>
                     <th>Status</th>
+                    <th width="180">Actions</th>
                 </tr>
                 </thead>
 
@@ -79,6 +95,42 @@
                                 </span>
                             @endif
                         </td>
+
+                        <td>
+
+    <a href="{{ route('admin.users.show',$user) }}"
+       class="btn btn-sm btn-info">
+
+        View
+
+    </a>
+
+    <a href="{{ route('admin.users.edit',$user) }}"
+       class="btn btn-sm btn-warning">
+
+        Edit
+
+    </a>
+
+    <form
+        method="POST"
+        action="{{ route('admin.users.destroy',$user) }}"
+        class="d-inline">
+
+        @csrf
+        @method('DELETE')
+
+        <button
+            onclick="return confirm('Delete this user?')"
+            class="btn btn-sm btn-danger">
+
+            Delete
+
+        </button>
+
+    </form>
+
+</td>
 
                     </tr>
 

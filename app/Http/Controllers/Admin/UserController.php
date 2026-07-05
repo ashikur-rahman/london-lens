@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\StoreUserRequest;
 
+use App\Http\Requests\UpdateUserRequest;
+
+use App\Models\User;
+
 class UserController extends Controller
 {
     public function __construct(
@@ -46,7 +50,32 @@ class UserController extends Controller
         );
 }
     public function show() {}
-    public function edit() {}
-    public function update() {}
+    public function edit(User $user)
+    {
+        return view('admin.users.edit', [
+
+            'user' => $user,
+
+            'roles' => Role::pluck('name'),
+
+        ]);
+    }
+            public function update(
+            UpdateUserRequest $request,
+            User $user
+        )
+        {
+            $this->service->update(
+                $user,
+                $request->validated()
+            );
+
+            return redirect()
+                ->route('admin.users.index')
+                ->with(
+                    'success',
+                    'User updated successfully.'
+                );
+        }
     public function destroy() {}
 }
