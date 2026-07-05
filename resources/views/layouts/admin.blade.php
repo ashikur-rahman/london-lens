@@ -25,7 +25,7 @@
 </nav>
 
 <div class="container py-4">
-
+        <x-admin.flash />
     @yield('content')
 
 </div>

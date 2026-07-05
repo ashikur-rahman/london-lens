@@ -10,16 +10,27 @@ class UserRepository
     {
         return User::query()
             ->when($search, function ($query) use ($search) {
+
                 $query->where(function ($q) use ($search) {
+
                     $q->where('name', 'like', "%{$search}%")
-                      ->orWhere('email', 'like', "%{$search}%");
+                        ->orWhere('email', 'like', "%{$search}%");
+
                 });
+
             })
             ->when($role, function ($query) use ($role) {
+
                 $query->role($role);
+
             })
             ->latest()
             ->paginate(10)
             ->withQueryString();
+    }
+
+    public function create(array $data): User
+    {
+        return User::create($data);
     }
 }
